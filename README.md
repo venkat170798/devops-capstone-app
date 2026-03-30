@@ -10,21 +10,19 @@ The pipeline automates the complete software delivery lifecycle — from code co
 
 ## 🧱 Architecture
 
-```
 Developer → GitHub → Jenkins → Docker → Docker Hub → AWS EC2 → Monitoring (Prometheus + Grafana)
-```
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Version Control:** Git, GitHub
-* **CI/CD:** Jenkins
-* **Application:** Node.js (Express)
-* **Containerization:** Docker, Docker Hub
-* **Cloud:** AWS EC2 (Ubuntu)
-* **Monitoring:** Prometheus, Grafana, Node Exporter
-* **Automation:** Bash scripting, Cron jobs
+* Version Control: Git, GitHub
+* CI/CD: Jenkins
+* Application: Node.js (Express)
+* Containerization: Docker, Docker Hub
+* Cloud: AWS EC2 (Ubuntu)
+* Monitoring: Prometheus, Grafana, Node Exporter
+* Automation: Bash scripting, Cron jobs
 
 ---
 
@@ -32,17 +30,17 @@ Developer → GitHub → Jenkins → Docker → Docker Hub → AWS EC2 → Monit
 
 1. Developer pushes code to GitHub
 2. Jenkins pipeline is triggered automatically
-3. Jenkins performs:
+3. Jenkins:
 
    * Clones repository
    * Installs dependencies
    * Builds Docker image
-   * Runs container for validation
+   * Deploys container
    * Pushes image to Docker Hub
-4. EC2 instance pulls the image and runs the container
+4. Application is deployed on EC2 (port 80)
 5. Prometheus collects system metrics via Node Exporter
-6. Grafana visualizes metrics through dashboards
-7. Cron jobs automate backup and cleanup tasks
+6. Grafana visualizes metrics via dashboards
+7. Cron jobs automate backup and cleanup
 
 ---
 
@@ -80,10 +78,16 @@ http://localhost:3000
 docker build -t devops-app .
 ```
 
-#### Run Container
+#### Run Container (Production Style)
 
 ```bash
-docker run -d -p 3000:3000 devops-app
+docker run -d -p 80:3000 devops-app
+```
+
+Access:
+
+```
+http://<EC2-IP>
 ```
 
 ---
@@ -100,16 +104,17 @@ docker run -d -p 3000:3000 devops-app
 
 ## 📊 Monitoring Setup
 
-| Tool          | Port |
+| Service       | Port |
 | ------------- | ---- |
-| Node Exporter | 9100 |
-| Prometheus    | 9090 |
+| Application   | 80   |
 | Grafana       | 3000 |
+| Prometheus    | 9090 |
+| Node Exporter | 9100 |
 
 ### Grafana Dashboard
 
 * Dashboard ID: **1860**
-* Name: Node Exporter Full
+* Node Exporter Full Dashboard
 
 ---
 
@@ -117,13 +122,13 @@ docker run -d -p 3000:3000 devops-app
 
 ### Backup Script
 
-```bash
+```
 /home/ubuntu/backup.sh
 ```
 
 ### Cleanup Script
 
-```bash
+```
 /home/ubuntu/cleanup.sh
 ```
 
@@ -138,41 +143,41 @@ docker run -d -p 3000:3000 devops-app
 
 ## 📈 Features
 
-* ✅ Automated CI/CD pipeline
-* ✅ Docker-based container deployment
-* ✅ Cloud hosting on AWS EC2
-* ✅ Real-time monitoring with Prometheus & Grafana
-* ✅ Automated backup and cleanup
-* ✅ Health check endpoint (`/health`)
+* Automated CI/CD pipeline
+* Docker-based deployment
+* AWS EC2 hosting
+* Real-time monitoring
+* Automated backup & cleanup
+* Health endpoint (`/health`)
 
 ---
 
 ## 🧠 Key Learnings
 
-* CI/CD pipeline implementation using Jenkins
-* Docker image lifecycle (build → tag → push → deploy)
-* AWS EC2 provisioning and configuration
-* Monitoring with Prometheus and Grafana
-* Automation using Bash scripting and Cron jobs
-* Troubleshooting real-world DevOps issues
+* CI/CD using Jenkins
+* Docker lifecycle management
+* AWS EC2 deployment
+* Monitoring with Prometheus & Grafana
+* Automation using Bash & Cron
+* Debugging real DevOps issues
 
 ---
 
 ## 🗣️ Interview Summary
 
-"I built an end-to-end CI/CD pipeline using GitHub, Jenkins, Docker, and AWS EC2. The pipeline automates build, containerization, deployment, and monitoring using Prometheus and Grafana, along with automation using cron jobs."
+"I built an end-to-end CI/CD pipeline using GitHub, Jenkins, Docker, and AWS EC2. The application is deployed on port 80, with monitoring implemented using Prometheus and Grafana, and automation handled via cron jobs."
 
 ---
 
 ## 🚀 Future Improvements
 
 * Kubernetes deployment
-* Infrastructure as Code (Terraform)
-* Grafana alerting setup
-* Multi-environment setup (Dev/Prod)
+* Terraform (IaC)
+* Grafana alerts
+* Multi-environment setup
 
 ---
 
 ## 👨‍💻 Author
 
-**Venkat**
+Venkat
